@@ -17,7 +17,6 @@ public class Tweet {
     
     public Tweet(TweetDTO req){
         this.username = req.username();
-        this.avatar = req.avatar();
         this.text = req.text();
     }
 
@@ -27,9 +26,6 @@ public class Tweet {
 
     @Column(length = 50, nullable = false)
     private String username;
-
-    @Column(length = 1000, nullable = false)
-    private String avatar;
 
         @Column(length = 200, nullable = false)
     private String text;

@@ -19,10 +19,7 @@ public class UserService {
     }
 
     public void create(TweetUser data){
-        System.out.println("Service => " + data);
-        
         repository.save(data);
-        
     }
     
 }

@@ -8,9 +8,7 @@ public record TweetDTO(
 
     @NotNull @Size(min = 2, max =30) String username,
 
-    @NotNull @NotBlank String avatar,
-
-        @NotNull @NotBlank String text
+    @NotNull @NotBlank String text
 
 ) {
 }
