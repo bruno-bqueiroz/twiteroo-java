@@ -1,11 +1,14 @@
 package com.api.twiteroo.controllers;
 
-import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,19 +26,37 @@ import jakarta.validation.Valid;
 @RequestMapping("/tweets")
 
 public class TweetController {
-    
+
     @Autowired
-    private TweetService service;
+    private final TweetService tweetService;
 
-    // @GetMapping
-    // public List<Tweet> getAll(@RequestParam String page){
-    //     return service.findAllByUsername(page);
-    // }
 
+    public TweetController(TweetService tweetService) {
+        this.tweetService = tweetService;
+    }
+
+
+
+    @GetMapping
+    public ResponseEntity<Page<Tweet>> getTweetsByPage(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size
+            ) {
+        Page<Tweet> tweetPage = tweetService.getTweetsByPageAndUsername( page, size);
+        return ResponseEntity.ok(tweetPage);
+    }
+
+    @GetMapping("/{username}")
+    public ResponseEntity<Page<Object[]>> getUserByUsernameWithUserDetails(@PathVariable String username, Pageable pageable) {
+        return tweetService.getUserByUsernameWithUserDetails(username, pageable);
+    }
+    
+    
+    
 
     @PostMapping
     @ResponseStatus(value = HttpStatus.OK)
     public void create(@RequestBody @Valid TweetDTO req){
-        service.create(new Tweet(req));
+        tweetService.create(new Tweet(req));
     }
 }

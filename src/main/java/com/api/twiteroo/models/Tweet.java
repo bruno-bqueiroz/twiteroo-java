@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -27,7 +29,11 @@ public class Tweet {
     @Column(length = 50, nullable = false)
     private String username;
 
-        @Column(length = 200, nullable = false)
+    @Column(length = 200, nullable = false)
     private String text;
+
+    @ManyToOne
+    @JoinColumn(name = "avatar")
+    private TweetUser user;
 
 }
