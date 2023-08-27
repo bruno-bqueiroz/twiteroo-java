@@ -1,6 +1,7 @@
 package com.api.twiteroo.repository;
 
 import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,15 +13,11 @@ import com.api.twiteroo.dto.TweetWithUserDetailsDTO;
 import com.api.twiteroo.models.Tweet;
 
 @Repository
-public interface TweetRepository extends JpaRepository<Tweet, Long> {
+public interface TweetRepositoryPage extends JpaRepository<Tweet, Long> {
+
     @Query("SELECT new com.api.twiteroo.dto.TweetWithUserDetailsDTO(t.username, u.avatar, t.text) " +
-       "FROM Tweet t LEFT JOIN TweetUser u ON t.username = u.username WHERE t.username = :username")
+           "FROM Tweet t LEFT JOIN TweetUser u ON t.username = u.username WHERE t.username = :username")
     List<TweetWithUserDetailsDTO> findTweetsWithUserDetailsByUsername(@Param("username") String username);
 
-
-    @Query("SELECT new com.api.twiteroo.dto.TweetWithUserDetailsDTO(t.username, u.avatar, t.text) " +
-           "FROM Tweet t LEFT JOIN TweetUser u ON t.username = u.username")
-    List<TweetWithUserDetailsDTO> findAllTweetsWithUserDetails(Pageable pageable);
-    
-    Page<Tweet> findAll(Pageable pageable);
+    Page<Tweet> findByUsername(String username, Pageable pageable);
 }

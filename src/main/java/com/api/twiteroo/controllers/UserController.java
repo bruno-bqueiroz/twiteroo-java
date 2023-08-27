@@ -18,7 +18,7 @@ import com.api.twiteroo.services.UserService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/sign-up")
+@RequestMapping("sign-up")
 
 public class UserController {
     

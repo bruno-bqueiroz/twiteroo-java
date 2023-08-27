@@ -16,7 +16,6 @@ import lombok.NoArgsConstructor;
 public class TweetUser {
     
     public TweetUser(UserDTO req){
-        System.out.println("Model => " + req);
         this.username = req.username();
         this.avatar = req.avatar();
     }

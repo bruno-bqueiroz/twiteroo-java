@@ -28,12 +28,12 @@ public class Tweet {
 
     @Column(length = 50, nullable = false)
     private String username;
-
+    
     @Column(length = 200, nullable = false)
     private String text;
 
-    @ManyToOne
-    @JoinColumn(name = "avatar")
-    private TweetUser user;
+    public TweetUser getTweetUser() {
+        return null;
+    }
 
 }
